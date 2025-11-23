@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trackar - Fleet Management SaaS
 
-## Getting Started
+Trackar is a modern Fleet Management System built with Next.js 14, PostgreSQL, Prisma, and Socket.IO. It supports 4 user roles: Admin, Fleet Owner, Driver, and Client.
 
-First, run the development server:
+## 🚀 Quick Start Guide (VS Code)
+
+Follow these steps to run the project locally using VS Code terminals.
+
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **PostgreSQL** (Installed and running)
+- **VS Code**
+
+### 2. Environment Setup
+1.  Open the project folder in VS Code.
+2.  Create a new file named `.env` in the root directory.
+3.  Copy the following content into `.env`:
+
+```env
+# Database Connection (Ensure your Postgres password is correct)
+DATABASE_URL="postgresql://postgres:password@localhost:5432/trackar"
+
+# NextAuth Configuration
+NEXTAUTH_SECRET="supersecretkey123"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Google Maps (Optional - Leave as is for dev)
+NEXT_PUBLIC_MAPS_API_KEY="YOUR_MAPS_API_KEY"
+```
+
+### 3. Database Setup (Terminal 1)
+Open a new terminal in VS Code (`Ctrl + ~`) and run these commands one by one:
+
+1.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+
+2.  **Start PostgreSQL Service:**
+    *   *Windows*: Search for "Services", find `postgresql-x64-16` (or similar), right-click -> **Start**.
+    *   *Verify*: The service must be running for the next steps to work.
+
+3.  **Initialize Database:**
+    ```bash
+    npx prisma db push
+    ```
+    *Success message: "🚀  Your database is now in sync with your Prisma schema."*
+
+4.  **Seed Dummy Data:**
+    ```bash
+    npm run prisma:seed
+    ```
+    *Success message: "Seeding finished."*
+
+### 4. Run the Application (Terminal 1)
+In the same terminal, start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 5. Access the App
+Open your browser and go to: **[http://localhost:3000](http://localhost:3000)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Login Credentials:**
+*   **Admin**: `admin@example.com` / `password123`
+*   **Fleet Owner**: `owner@example.com` / `password123`
+*   **Driver**: `driver@example.com` / `password123`
+*   **Client**: `client@example.com` / `password123`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Troubleshooting
 
-## Learn More
+*   **"Connection refused" / Database Errors**:
+    *   Ensure PostgreSQL service is running.
+    *   Check if the password in `.env` matches your local Postgres password.
+    *   If your Postgres user is not `postgres`, update the `DATABASE_URL`.
 
-To learn more about Next.js, take a look at the following resources:
+*   **"Prisma Client not initialized"**:
+    *   Run `npx prisma generate` and restart the server.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*   **Build Errors**:
+    *   Run `npm run build` to check for errors.
+    *   If you see type errors, try `npm install` again.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📂 Project Structure
+*   `/app`: Next.js App Router pages.
+*   `/components`: UI components (Sidebar, Maps, etc.).
+*   `/lib`: Utility functions and database client.
+*   `/prisma`: Database schema and seed script.
+*   `/server`: Custom Socket.IO server.

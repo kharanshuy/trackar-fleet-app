@@ -1,0 +1,205 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  OWNER
+  DRIVER
+  CLIENT
+}
+
+enum VehicleStatus {
+  ACTIVE
+  MAINTENANCE
+  IDLE
+  OUT_OF_SERVICE
+}
+
+enum TripStatus {
+  ASSIGNED
+  IN_TRANSIT
+  COMPLETED
+  CANCELLED
+  DELAYED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(DRIVER)
+  phone     String?
+  address   String?
+  avatar    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ownedVehicles  Vehicle[]       @relation("OwnerVehicles")
+  drivenVehicles Vehicle[]       @relation("DriverVehicles")
+  drivenTrips    Trip[]          @relation("DriverTrips")
+  clientTrips    Trip[]          @relation("ClientTrips")
+  tickets        SupportTicket[]
+  invoices       Invoice[]
+  notifications  Notification[]
+}
+
+model Vehicle {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  plateNumber String        @unique
+  type        String
+  make        String?
+  model       String?
+  year        Int?
+  status      VehicleStatus @default(IDLE)
+  mileage     Float         @default(0)
+  fuelType    String?
+  capacity    String?
+  currentLat  Float?
+  currentLng  Float?
+  lastUpdated DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  ownerId String @db.ObjectId
+  owner   User   @relation("OwnerVehicles", fields: [ownerId], references: [id])
+
+  driverId String? @db.ObjectId
+  driver   User?   @relation("DriverVehicles", fields: [driverId], references: [id])
+
+  trips       Trip[]
+  maintenance Maintenance[]
+}
+
+model Trip {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  tripNumber      String     @unique
+  origin          String
+  destination     String
+  originLat       Float?
+  originLng       Float?
+  destinationLat  Float?
+  destinationLng  Float?
+  distance        Float?
+  estimatedTime   Float?
+  actualTime      Float?
+  status          TripStatus @default(ASSIGNED)
+  startTime       DateTime?
+  endTime         DateTime?
+  cost            Float?
+  notes           String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  vehicleId String @db.ObjectId
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+
+  driverId String @db.ObjectId
+  driver   User   @relation("DriverTrips", fields: [driverId], references: [id])
+
+  clientId String @db.ObjectId
+  client   User   @relation("ClientTrips", fields: [clientId], references: [id])
+
+  locations Location[]
+  invoice   Invoice?
+}
+
+model Location {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  lat       Float
+  lng       Float
+  speed     Float?
+  heading   Float?
+  altitude  Float?
+  timestamp DateTime @default(now())
+
+  tripId String @db.ObjectId
+  trip   Trip   @relation(fields: [tripId], references: [id])
+}
+
+model Maintenance {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  cost        Float
+  date        DateTime
+  status      String   @default("SCHEDULED")
+  type        String?
+  mileage     Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  vehicleId String @db.ObjectId
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+}
+
+model SupportTicket {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  subject   String
+  message   String
+  reply     String?
+  status    TicketStatus @default(OPEN)
+  priority  String       @default("MEDIUM")
+  category  String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Invoice {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceNumber String      @unique
+  amount      Float
+  tax         Float         @default(0)
+  discount    Float         @default(0)
+  total       Float
+  status      InvoiceStatus @default(PENDING)
+  dueDate     DateTime
+  paidDate    DateTime?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  clientId String @db.ObjectId
+  client   User   @relation(fields: [clientId], references: [id])
+
+  tripId String? @unique @db.ObjectId
+  trip   Trip?   @relation(fields: [tripId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+}

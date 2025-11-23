@@ -1,0 +1,39 @@
+
+> trackar@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.3 (Turbopack)
+   - Environments: .env
+
+ ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./app/driver/page.tsx:6:1
+Module not found: Can't resolve '@/components/ui/progress'
+  4 | import { MapPin, Clock, CheckCircle, DollarSign, TrendingUp, Calendar, AlertCircle, Navigation } from "lucide-react"
+  5 | import { Button } from "@/components/ui/button"
+> 6 | import { Progress } from "@/components/ui/progress"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { useEffect, useState } from "react"
+  8 |
+  9 | export default function DriverDashboardPage() {
+
+Import map: aliased to relative './components/ui/progress' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./app/driver/page.tsx [Client Component Browser]
+    ./app/driver/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/driver/page.tsx [Client Component SSR]
+    ./app/driver/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/driver/page.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
