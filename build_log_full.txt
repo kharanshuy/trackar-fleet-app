@@ -1,0 +1,51 @@
+
+> trackar@0.1.0 build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v5.10.2) to .\node_modules\@prisma\client in 394ms
+
+Start using Prisma Client in Node.js (See: https://pris.ly/d/client)
+```
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+```
+or start using Prisma Client at the edge (See: https://pris.ly/d/accelerate)
+```
+import { PrismaClient } from '@prisma/client/edge'
+const prisma = new PrismaClient()
+```
+
+See other ways of importing Prisma Client: http://pris.ly/d/importing-client
+
+ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+Γöé  Deploying your app to serverless or edge functions?        Γöé
+Γöé  Try Prisma Accelerate for connection pooling and caching.  Γöé
+Γöé  https://pris.ly/cli/accelerate                             Γöé
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+
+   Γû▓ Next.js 16.0.3 (Turbopack)
+   - Environments: .env
+
+ ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 10.4s
+   Running TypeScript ...
+   Collecting page data using 11 workers ...
+   Generating static pages using 11 workers (0/51) ...
+   Generating static pages using 11 workers (12/51) 
+Error occurred prerendering page "/admin/invoices". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: Cannot destructure property 'data' of '(0 , bH.useSession)(...)' as it is undefined.
+    at bJ (C:\Users\khara\Desktop\Kharanshu\Business\ERP Software\MobileApp\trackar\.next\server\chunks\ssr\components_dashboard-layout_tsx_68fc6de1._.js:1:31911) {
+  digest: '500332455'
+}
+Export encountered an error on /admin/invoices/page: /admin/invoices, exiting the build.
+Error occurred prerendering page "/client/invoices". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: Cannot destructure property 'data' of '(0 , bH.useSession)(...)' as it is undefined.
+    at bJ (C:\Users\khara\Desktop\Kharanshu\Business\ERP Software\MobileApp\trackar\.next\server\chunks\ssr\components_dashboard-layout_tsx_68fc6de1._.js:1:31911) {
+  digest: '1905960851'
+}
+Export encountered an error on /client/invoices/page: /client/invoices, exiting the build.
+ Γ¿» Next.js build worker exited with code: 1 and signal: null

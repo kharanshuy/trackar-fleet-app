@@ -6,7 +6,7 @@ import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, L
 import { useEffect, useState } from "react"
 import dynamic from 'next/dynamic'
 
-const MapComponent = dynamic(() => import('@/components/map/map-component'), {
+const MapComponent = dynamic(() => import('@/components/lazy-map').then(mod => ({ default: mod.LazyMap })), {
     ssr: false,
     loading: () => <div className="h-[400px] w-full flex items-center justify-center bg-muted">Loading map...</div>
 })

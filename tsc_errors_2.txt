@@ -1,0 +1,9 @@
+app/api/driver/location/route.ts(55,40): error TS1005: ',' expected.
+app/api/driver/location/route.ts(56,36): error TS1005: ',' expected.
+app/api/driver/location/route.ts(57,17): error TS1135: Argument expression expected.
+app/api/driver/location/route.ts(59,9): error TS1472: 'catch' or 'finally' expected.
+app/api/driver/location/route.ts(60,3): error TS1005: 'try' expected.
+app/api/driver/location/route.ts(67,1): error TS1128: Declaration or statement expected.
+app/api/driver/trips/[id]/complete/route.ts(19,1): error TS1472: 'catch' or 'finally' expected.
+app/api/driver/trips/[id]/start/route.ts(15,1): error TS1472: 'catch' or 'finally' expected.
+app/api/support/tickets/route.ts(53,1): error TS1472: 'catch' or 'finally' expected.

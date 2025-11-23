@@ -119,4 +119,41 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Enhanced focus indicators for accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+  
+  /* Ensure buttons and interactive elements have visible focus states */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+  
+  /* Skip to main content link for keyboard users */
+  .skip-to-main {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md;
+  }
+  
+  /* Smooth scrolling for better UX */
+  html {
+    @apply scroll-smooth;
+  }
+  
+  /* Improve readability */
+  p,
+  li {
+    @apply max-w-prose;
+  }
+}
+
+/* Custom utilities for mobile touch targets */
+@layer utilities {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
 }

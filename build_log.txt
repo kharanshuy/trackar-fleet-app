@@ -1,68 +1,54 @@
 
 > trackar@0.1.0 build
-> next build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v5.10.2) to .\node_modules\@prisma\client in 261ms
+
+Start using Prisma Client in Node.js (See: https://pris.ly/d/client)
+```
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+```
+or start using Prisma Client at the edge (See: https://pris.ly/d/accelerate)
+```
+import { PrismaClient } from '@prisma/client/edge'
+const prisma = new PrismaClient()
+```
+
+See other ways of importing Prisma Client: http://pris.ly/d/importing-client
+
+ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+Γöé  Deploying your app to serverless or edge functions?        Γöé
+Γöé  Try Prisma Accelerate for connection pooling and caching.  Γöé
+Γöé  https://pris.ly/cli/accelerate                             Γöé
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
 
    Γû▓ Next.js 16.0.3 (Turbopack)
+   - Environments: .env
 
  ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
    Creating an optimized production build ...
+ Γ£ô Compiled successfully in 10.3s
+   Running TypeScript ...
+Failed to compile.
 
-> Build error occurred
-Error: Turbopack build failed with 2 errors:
-./lib/prisma.ts:1:1
-Module not found: Can't resolve '@prisma/client'
-> 1 | import { PrismaClient } from '@prisma/client'
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  2 |
-  3 | const globalForPrisma = globalThis as unknown as {
-  4 |   prisma: PrismaClient | undefined
+.next/dev/types/validator.ts:315:31
+Type error: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/admin/users/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/users/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; email: string; name: string; role: Role; isActive: boolean; }> | NextResponse<{ error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
 
-
-
-Import traces:
-  App Route:
-    ./lib/prisma.ts
-    ./app/api/register/route.ts
-
-  Server Component:
-    ./lib/prisma.ts
-    ./lib/auth.ts
-    ./app/dashboard/page.tsx
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-./components/ui/button.tsx:3:1
-Module not found: Can't resolve 'class-variance-authority'
-  1 | import * as React from "react"
-  2 | import { Slot } from "@radix-ui/react-slot"
-> 3 | import { cva, type VariantProps } from "class-variance-authority"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | import { cn } from "@/lib/utils"
-  6 |
-
-
-
-Import traces:
-  Server Component:
-    ./components/ui/button.tsx
-    ./app/page.tsx
-
-  Client Component Browser:
-    ./components/ui/button.tsx [Client Component Browser]
-    ./app/(auth)/login/page.tsx [Client Component Browser]
-    ./app/(auth)/login/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/ui/button.tsx [Client Component SSR]
-    ./app/(auth)/login/page.tsx [Client Component SSR]
-    ./app/(auth)/login/page.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-    at <unknown> (./lib/prisma.ts:1:1)
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
-    at <unknown> (./components/ui/button.tsx:3:1)
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+  313 |   type __IsExpected<Specific extends RouteHandlerConfig<"/api/admin/users/[id]">> = Specific
+  314 |   const handler = {} as typeof import("../../../app/api/admin/users/[id]/route.js")
+> 315 |   type __Check = __IsExpected<typeof handler>
+      |                               ^
+  316 |   // @ts-ignore
+  317 |   type __Unused = __Check
+  318 | }
+Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,101 @@
+.next/dev/types/validator.ts(315,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/admin/users/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/users/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; email: string; name: string; role: Role; isActive: boolean; }> | NextResponse<{ error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(351,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/client/shipments/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/client/shipments/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ shipment: { vehicle: { plateNumber: string; type: string; currentLat: number | null; currentLng: number | null; lastUpdated: Date | null; }; driver: { ...; }; } & { ...; }; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(414,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/driver/trips/[id]/complete/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/driver/trips/[id]/complete">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; ... 14 more ...; clientId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(423,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/driver/trips/[id]/start/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/driver/trips/[id]/start">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; ... 14 more ...; clientId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(468,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/owner/vehicles/[id]/assign/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/owner/vehicles/[id]/assign">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ error: string; }> | NextResponse<{ driver: { email: string; name: string; } | null; } & { id: string; plateNumber: string; ... 14 more ...; driverId: string | null; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(504,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/support/tickets/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/support/tickets/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; subject: string; message: string; reply: string | null; status: TicketStatus; priority: string; category: string | null; createdAt: Date; updatedAt: Date; userId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(315,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/admin/users/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/users/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; email: string; name: string; role: Role; isActive: boolean; }> | NextResponse<{ error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(351,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/client/shipments/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/client/shipments/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ shipment: { vehicle: { plateNumber: string; type: string; currentLat: number | null; currentLng: number | null; lastUpdated: Date | null; }; driver: { ...; }; } & { ...; }; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(414,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/driver/trips/[id]/complete/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/driver/trips/[id]/complete">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; ... 14 more ...; clientId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(423,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/driver/trips/[id]/start/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/driver/trips/[id]/start">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; ... 14 more ...; clientId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(468,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/owner/vehicles/[id]/assign/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/owner/vehicles/[id]/assign">'.
+  Types of property 'POST' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ error: string; }> | NextResponse<{ driver: { email: string; name: string; } | null; } & { id: string; plateNumber: string; ... 14 more ...; driverId: string | null; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(504,31): error TS2344: Type 'typeof import("C:/Users/khara/Desktop/Kharanshu/Business/ERP Software/MobileApp/trackar/app/api/support/tickets/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/support/tickets/[id]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ id: string; subject: string; message: string; reply: string | null; status: TicketStatus; priority: string; category: string | null; createdAt: Date; updatedAt: Date; userId: string; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+app/api/client/invoices/route.ts(21,25): error TS2353: Object literal may only specify known properties, and 'startLocation' does not exist in type 'TripSelect<DefaultArgs>'.
+app/api/driver/location/route.ts(64,17): error TS2353: Object literal may only specify known properties, and 'lastLocation' does not exist in type '(Without<VehicleUpdateInput, VehicleUncheckedUpdateInput> & VehicleUncheckedUpdateInput) | (Without<...> & VehicleUpdateInput)'.
+app/api/driver/location/route.ts(70,48): error TS2339: Property 'lastLocation' does not exist on type '{ id: string; plateNumber: string; type: string; make: string | null; model: string | null; year: number | null; status: VehicleStatus; mileage: number; fuelType: string | null; ... 7 more ...; driverId: string | null; }'.
+app/api/driver/trips/[id]/complete/route.ts(23,17): error TS2561: Object literal may only specify known properties, but 'endLocation' does not exist in type '(Without<TripUpdateInput, TripUncheckedUpdateInput> & TripUncheckedUpdateInput) | (Without<...> & TripUpdateInput)'. Did you mean to write 'locations'?
+app/api/driver/trips/[id]/start/route.ts(18,17): error TS2322: Type '"IN_PROGRESS"' is not assignable to type 'TripStatus | EnumTripStatusFieldUpdateOperationsInput | undefined'.
+app/api/owner/revenue/route.ts(23,17): error TS2353: Object literal may only specify known properties, and 'fare' does not exist in type 'TripSelect<DefaultArgs>'.
+app/api/owner/revenue/route.ts(32,39): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'Date | null' is not assignable to parameter of type 'string | number | Date'.
+      Type 'null' is not assignable to type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'Date | null' is not assignable to parameter of type 'string | number'.
+      Type 'null' is not assignable to type 'string | number'.
+app/api/owner/revenue/route.ts(37,77): error TS2339: Property 'fare' does not exist on type '{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; destinationLat: number | null; destinationLng: number | null; ... 12 more ...; clientId: string; }'.
+app/api/owner/revenue/route.ts(38,71): error TS2339: Property 'fare' does not exist on type '{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; destinationLat: number | null; destinationLng: number | null; ... 12 more ...; clientId: string; }'.
+app/api/owner/revenue/route.ts(44,79): error TS2339: Property 'fare' does not exist on type '{ id: string; tripNumber: string; origin: string; destination: string; originLat: number | null; originLng: number | null; destinationLat: number | null; destinationLng: number | null; ... 12 more ...; clientId: string; }'.
+app/api/support/tickets/route.ts(58,17): error TS2353: Object literal may only specify known properties, and 'description' does not exist in type '(Without<SupportTicketCreateInput, SupportTicketUncheckedCreateInput> & SupportTicketUncheckedCreateInput) | (Without<...> & SupportTicketCreateInput)'.
