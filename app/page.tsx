@@ -25,7 +25,7 @@ export default function LandingPage() {
               <Link href="#features" className="text-sm font-medium hover:text-blue-600 transition-colors">
                 Features
               </Link>
-              <Link href="#about" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="/about" className="text-sm font-medium hover:text-blue-600 transition-colors">
                 About
               </Link>
               <Link href="/login">
