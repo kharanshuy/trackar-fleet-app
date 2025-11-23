@@ -1,10 +1,14 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Truck, MapPin, BarChart3, Shield, Clock, Users } from "lucide-react"
+import { ContactModal } from "@/components/contact-modal"
 
 export default function LandingPage() {
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
@@ -146,16 +150,19 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-center text-white">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Optimize Your Fleet?
+              Have Questions? Contact Us
             </h2>
             <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-              Join hundreds of companies already using Trackar to streamline their fleet operations
+              Our team is here to help you optimize your fleet operations. Reach out to us today!
             </p>
-            <Link href="/register">
-              <Button size="lg" variant="secondary" className="text-lg px-8 h-12">
-                Get Started Free
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="text-lg px-8 h-12"
+              onClick={() => setIsContactOpen(true)}
+            >
+              Contact Us
+            </Button>
           </div>
         </div>
       </section>
@@ -168,6 +175,8 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </div>
   )
 }
