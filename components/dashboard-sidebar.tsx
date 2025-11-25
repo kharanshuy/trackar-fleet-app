@@ -28,14 +28,12 @@ const roleNavigation = {
     ADMIN: [
         { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
         { name: 'Users', href: '/admin/users', icon: Users },
-        { name: 'Vehicles', href: '/admin/vehicles', icon: Truck },
-        { name: 'Trips', href: '/admin/trips', icon: MapPin },
         { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
         { name: 'Support', href: '/admin/support', icon: HelpCircle },
     ],
     OWNER: [
         { name: 'Dashboard', href: '/owner', icon: LayoutDashboard },
-        { name: 'My Vehicles', href: '/owner/vehicles', icon: Truck },
+        { name: 'Fleet Management', href: '/owner/vehicles', icon: Truck },
         { name: 'My Drivers', href: '/owner/drivers', icon: Users },
         { name: 'Trips', href: '/owner/trips', icon: MapPin },
         { name: 'Maintenance', href: '/owner/maintenance', icon: Wrench },

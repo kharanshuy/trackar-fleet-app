@@ -1,7 +1,7 @@
 import { createServer } from 'http'
 import { parse } from 'url'
 import next from 'next'
-import { initializeSocketIO } from './lib/socket'
+import { initializeSocketIO } from './lib/socket-enhanced'
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'

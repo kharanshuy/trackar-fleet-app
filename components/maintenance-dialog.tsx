@@ -17,7 +17,6 @@ const maintenanceSchema = z.object({
     vehicleId: z.string().min(1, "Vehicle is required"),
     type: z.enum(["ROUTINE", "REPAIR", "INSPECTION"]),
     description: z.string().min(5, "Description is required"),
-    cost: z.string().min(1, "Cost is required"),
     date: z.string().min(1, "Date is required"),
 })
 
@@ -45,7 +44,6 @@ export function MaintenanceDialog({ children }: { children: React.ReactNode }) {
             vehicleId: "",
             type: "ROUTINE",
             description: "",
-            cost: "",
             date: new Date().toISOString().split('T')[0],
         },
     })
@@ -133,21 +131,12 @@ export function MaintenanceDialog({ children }: { children: React.ReactNode }) {
                         )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="cost">Estimated Cost</Label>
-                            <Input id="cost" type="number" {...form.register("cost")} placeholder="0.00" />
-                            {form.formState.errors.cost && (
-                                <p className="text-sm text-red-500">{form.formState.errors.cost.message}</p>
-                            )}
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="date">Date</Label>
-                            <Input id="date" type="date" {...form.register("date")} />
-                            {form.formState.errors.date && (
-                                <p className="text-sm text-red-500">{form.formState.errors.date.message}</p>
-                            )}
-                        </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="date">Date</Label>
+                        <Input id="date" type="date" {...form.register("date")} />
+                        {form.formState.errors.date && (
+                            <p className="text-sm text-red-500">{form.formState.errors.date.message}</p>
+                        )}
                     </div>
 
                     <Button type="submit" className="w-full" disabled={scheduleMaintenance.isPending}>

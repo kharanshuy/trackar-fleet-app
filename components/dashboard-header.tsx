@@ -1,6 +1,6 @@
 "use client"
 
-import { LogOut, Menu, User, Bell } from "lucide-react"
+import { LogOut, Menu, User, Bell, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -12,7 +12,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signOut, useSession } from "next-auth/react"
+import { useTheme } from "next-themes"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 interface DashboardHeaderProps {
     onMenuClick?: () => void
@@ -20,6 +22,13 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
     const { data: session } = useSession()
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+
+    // Avoid hydration mismatch
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:bg-gray-900/95 dark:supports-[backdrop-filter]:bg-gray-900/80">
@@ -46,8 +55,24 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                     </Link>
                 </div>
 
-                {/* Right: Notifications + User Menu */}
+                {/* Right: Theme Toggle + Notifications + User Menu */}
                 <div className="flex items-center gap-2 sm:gap-4">
+                    {/* Theme Toggle */}
+                    {mounted && (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            aria-label="Toggle theme"
+                        >
+                            {theme === 'dark' ? (
+                                <Sun className="h-5 w-5" />
+                            ) : (
+                                <Moon className="h-5 w-5" />
+                            )}
+                        </Button>
+                    )}
+
                     {/* Notifications */}
                     <Button variant="ghost" size="icon" aria-label="Notifications">
                         <Bell className="h-5 w-5" />

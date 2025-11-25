@@ -1,0 +1,5 @@
+
+> trackar@0.1.0 lint
+> next lint
+
+Invalid project directory provided, no such directory: C:\Users\khara\Desktop\Kharanshu\Business\ERP Software\MobileApp\trackar\lint

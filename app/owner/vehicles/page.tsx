@@ -9,8 +9,12 @@ import { EmptyState } from "@/components/empty-state"
 import { LazyMap } from "@/components/lazy-map"
 import { useState } from "react"
 
+import { useFleetTracking } from "@/lib/use-realtime"
+import { useSession } from "next-auth/react"
+
 export default function OwnerVehiclesPage() {
     const [search, setSearch] = useState("")
+    const { data: session } = useSession()
 
     const { data, isLoading } = useQuery({
         queryKey: ['owner-vehicles'],
@@ -20,6 +24,9 @@ export default function OwnerVehiclesPage() {
             return res.json()
         },
     })
+
+    // Enable real-time tracking
+    useFleetTracking((session?.user as any)?.id || null)
 
     const vehicles = data?.vehicles || []
     const filteredVehicles = vehicles.filter((v: any) =>
@@ -48,7 +55,7 @@ export default function OwnerVehiclesPage() {
 
             {/* Map View */}
             <div className="rounded-xl overflow-hidden border shadow-sm">
-                <LazyMap vehicles={filteredVehicles} height="400px" />
+                <LazyMap vehicles={filteredVehicles} height="400px" realtime={true} />
             </div>
 
             {filteredVehicles.length === 0 && !isLoading ? (

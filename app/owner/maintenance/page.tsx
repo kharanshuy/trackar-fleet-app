@@ -65,15 +65,9 @@ export default function OwnerMaintenancePage() {
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar className="h-4 w-4 text-muted-foreground" />
-                                            <span>{new Date(log.date).toLocaleDateString()}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <DollarSign className="h-4 w-4 text-muted-foreground" />
-                                            <span>₹{Number(log.cost).toLocaleString()}</span>
-                                        </div>
+                                    <div className="flex items-center gap-2 text-sm pt-4 border-t">
+                                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                                        <span>{new Date(log.date).toLocaleDateString()}</span>
                                     </div>
                                 </div>
                             </CardContent>

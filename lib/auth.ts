@@ -4,12 +4,26 @@ import { prisma } from "@/lib/prisma"
 import { compare } from "bcrypt"
 
 export const authOptions: NextAuthOptions = {
-    debug: true, // Enable debug logging
+    debug: process.env.NODE_ENV === 'development', // Only debug in dev
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        updateAge: 24 * 60 * 60, // 24 hours
     },
     pages: {
         signIn: "/login",
+    },
+    cookies: {
+        sessionToken: {
+            name: `${process.env.NODE_ENV === 'production' ? '__Secure-' : ''}next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'strict',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            },
+        },
     },
     providers: [
         CredentialsProvider({

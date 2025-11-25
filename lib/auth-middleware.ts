@@ -1,38 +1,61 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
+import { NextRequest, NextResponse } from 'next/server'
+import { getToken } from 'next-auth/jwt'
 
-export async function authMiddleware(requiredRole?: string | string[]) {
-    const session = await getServerSession()
+export async function authMiddleware(req: NextRequest, requiredRole?: string | string[]) {
+    try {
+        // Get the JWT token from cookies
+        const token = await getToken({
+            req,
+            secret: process.env.NEXTAUTH_SECRET
+        })
 
-    if (!session || !session.user) {
-        return NextResponse.json({ error: 'Unauthorized - Please login' }, { status: 401 })
-    }
+        console.log('[Middleware] Token check:', {
+            hasToken: !!token,
+            userEmail: token?.email,
+            userRole: token?.role,
+            userId: token?.id
+        })
 
-    const userRole = (session.user as any)?.role
-
-    if (!userRole) {
-        return NextResponse.json({ error: 'Unauthorized - Invalid user role' }, { status: 401 })
-    }
-
-    if (requiredRole) {
-        const allowedRoles = Array.isArray(requiredRole) ? requiredRole : [requiredRole]
-
-        if (!allowedRoles.includes(userRole)) {
-            return NextResponse.json({
-                error: 'Forbidden - Insufficient permissions',
-                required: allowedRoles,
-                current: userRole
-            }, { status: 403 })
+        if (!token) {
+            console.log('[Middleware] No token found')
+            return NextResponse.json({ error: 'Unauthorized - Please login' }, { status: 401 })
         }
-    }
 
-    return {
-        session,
-        userId: (session.user as any)?.id,
-        userRole,
-    }
-}
+        const userRole = token.role as string
+        const userId = token.id as string
 
-export async function requireAuth(...roles: string[]) {
-    return authMiddleware(roles.length > 0 ? roles : undefined)
+        if (!userId) {
+            console.log('[Middleware] No user ID in token')
+            return NextResponse.json({ error: 'Unauthorized - Invalid session' }, { status: 401 })
+        }
+
+        if (!userRole) {
+            console.log('[Middleware] No user role in token')
+            return NextResponse.json({ error: 'Unauthorized - Invalid user role' }, { status: 401 })
+        }
+
+        if (requiredRole) {
+            const allowedRoles = Array.isArray(requiredRole) ? requiredRole : [requiredRole]
+
+            if (!allowedRoles.includes(userRole)) {
+                console.log('[Middleware] Role mismatch:', { required: allowedRoles, actual: userRole })
+                return NextResponse.json({
+                    error: 'Forbidden - Insufficient permissions',
+                    required: allowedRoles,
+                    current: userRole
+                }, { status: 403 })
+            }
+        }
+
+        console.log('[Middleware] Auth successful:', { userId, userRole })
+
+        return {
+            token,
+            userId,
+            userRole,
+        }
+    } catch (error) {
+        console.error('[Middleware] Auth error:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
 }

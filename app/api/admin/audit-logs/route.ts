@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { authMiddleware } from "@/lib/auth-middleware"
 import { getAuditLogs } from "@/lib/audit-log"
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
         // Only admins can view audit logs
-        const auth = await authMiddleware('ADMIN')
+        const auth = await authMiddleware(req, 'ADMIN')
         if (auth instanceof NextResponse) return auth
 
         const { searchParams } = new URL(req.url)

@@ -1,10 +1,12 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Truck, MapPin, DollarSign, TrendingUp, Activity, AlertCircle } from "lucide-react"
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { Users, Truck, MapPin, DollarSign, TrendingUp, Activity, Calendar } from "lucide-react"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { useEffect, useState } from "react"
 import dynamic from 'next/dynamic'
+import { KPICard } from "@/components/kpi-card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const MapComponent = dynamic(() => import('@/components/lazy-map').then(mod => ({ default: mod.LazyMap })), {
     ssr: false,
@@ -14,6 +16,7 @@ const MapComponent = dynamic(() => import('@/components/lazy-map').then(mod => (
 export default function AdminDashboard() {
     const [data, setData] = useState<any>(null)
     const [loading, setLoading] = useState(true)
+    const [timeframe, setTimeframe] = useState("month")
 
     useEffect(() => {
         fetch('/api/dashboard/admin')
@@ -35,160 +38,131 @@ export default function AdminDashboard() {
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            <div className="p-4 md:p-6 lg:p-8 space-y-6">
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Overview of your fleet operations</p>
-                    </div>
+        <div className="space-y-6">
+            {/* Header & Controls */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Overview of your fleet operations</p>
                 </div>
-
-                {/* Stats Cards */}
-                <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-                    <Card className="border-l-4 border-l-blue-500 hover:shadow-lg transition-all duration-200 cursor-pointer hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                            <DollarSign className="h-5 w-5 text-blue-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">₹{data?.stats?.totalRevenue?.toLocaleString('en-IN') || 0}</div>
-                            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                                <TrendingUp className="h-3 w-3 text-green-500" />
-                                <span className="text-green-500">+12%</span> from last month
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="border-l-4 border-l-green-500 hover:shadow-lg transition-all duration-200 cursor-pointer hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Active Trips</CardTitle>
-                            <MapPin className="h-5 w-5 text-green-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">{data?.stats?.activeTrips || 0}</div>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Vehicles on the road
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="border-l-4 border-l-orange-500 hover:shadow-lg transition-all duration-200 cursor-pointer hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Vehicles</CardTitle>
-                            <Truck className="h-5 w-5 text-orange-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">{data?.stats?.totalVehicles || 0}</div>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Fleet size
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="border-l-4 border-l-purple-500 hover:shadow-lg transition-all duration-200 cursor-pointer hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-                            <Users className="h-5 w-5 text-purple-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">{data?.stats?.totalUsers || 0}</div>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Drivers, Owners, Clients
-                            </p>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* Charts Section */}
-                <div className="grid gap-4 md:gap-6 grid-cols-1 lg:grid-cols-7">
-                    {/* Revenue Trend */}
-                    <Card className="lg:col-span-4 hover:shadow-lg transition-shadow duration-200">
-                        <CardHeader>
-                            <CardTitle>Revenue Overview</CardTitle>
-                        </CardHeader>
-                        <CardContent className="pl-2">
-                            <ResponsiveContainer width="100%" height={300}>
-                                <BarChart data={data?.revenueTrend || []}>
-                                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                                    <XAxis dataKey="name" className="text-xs" />
-                                    <YAxis className="text-xs" />
-                                    <Tooltip
-                                        contentStyle={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                                        formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Revenue']}
-                                    />
-                                    <Bar dataKey="total" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
-
-                    {/* Vehicle Status */}
-                    <Card className="lg:col-span-3 hover:shadow-lg transition-shadow duration-200">
-                        <CardHeader>
-                            <CardTitle>Fleet Status</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <PieChart>
-                                    <Pie
-                                        data={Object.entries(data?.vehicleStats || {}).map(([name, value]) => ({ name, value }))}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={80}
-                                        fill="#8884d8"
-                                        paddingAngle={5}
-                                        dataKey="value"
-                                    >
-                                        {Object.entries(data?.vehicleStats || {}).map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip />
-                                    <Legend />
-                                </PieChart>
-                            </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* Map & Recent Activity */}
-                <div className="grid gap-4 md:gap-6 grid-cols-1 lg:grid-cols-3">
-                    <Card className="lg:col-span-2 hover:shadow-lg transition-shadow duration-200">
-                        <CardHeader>
-                            <CardTitle>Live Fleet Map</CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-0">
-                            <div className="h-[400px] w-full rounded-b-lg overflow-hidden">
-                                <MapComponent vehicles={data?.mapVehicles || []} />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="hover:shadow-lg transition-shadow duration-200">
-                        <CardHeader>
-                            <CardTitle>Recent Activity</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {data?.recentActivity?.map((trip: any, i: number) => (
-                                    <div key={i} className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                                        <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                                            <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium">{trip.vehicle}</p>
-                                            <p className="text-xs text-muted-foreground">{trip.route}</p>
-                                        </div>
-                                        <div className="ml-auto text-xs text-muted-foreground">
-                                            {new Date(trip.date).toLocaleDateString()}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
+                <div className="flex items-center gap-2">
+                    <Select value={timeframe} onValueChange={setTimeframe}>
+                        <SelectTrigger className="w-[180px]">
+                            <Calendar className="mr-2 h-4 w-4" />
+                            <SelectValue placeholder="Select timeframe" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="today">Today</SelectItem>
+                            <SelectItem value="week">This Week</SelectItem>
+                            <SelectItem value="month">This Month</SelectItem>
+                            <SelectItem value="year">This Year</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
+
+            {/* Stats Cards */}
+            <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                <KPICard
+                    title="Total Revenue"
+                    value={`₹${data?.stats?.totalRevenue?.toLocaleString('en-IN') || 0}`}
+                    icon={DollarSign}
+                    accentColor="blue"
+                    trend={{ value: "+12%", positive: true, label: "from last month" }}
+                />
+                <KPICard
+                    title="Active Trips"
+                    value={data?.stats?.activeTrips || 0}
+                    icon={MapPin}
+                    accentColor="green"
+                    subtitle="Vehicles on the road"
+                />
+                <KPICard
+                    title="Total Vehicles"
+                    value={data?.stats?.totalVehicles || 0}
+                    icon={Truck}
+                    accentColor="orange"
+                    subtitle="Fleet size"
+                />
+                <KPICard
+                    title="Total Users"
+                    value={data?.stats?.totalUsers || 0}
+                    icon={Users}
+                    accentColor="purple"
+                    subtitle="Drivers, Owners, Clients"
+                />
+            </div>
+
+            {/* Charts Section */}
+            <div className="grid gap-4 md:gap-6 grid-cols-1 lg:grid-cols-7">
+                {/* Revenue Trend */}
+                <Card className="lg:col-span-4">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <TrendingUp className="h-5 w-5" />
+                            Revenue Trend
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={data?.charts?.revenue || []}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="revenue" fill="#3b82f6" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </CardContent>
+                </Card>
+
+                {/* Trip Status Distribution */}
+                <Card className="lg:col-span-3">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Activity className="h-5 w-5" />
+                            Trip Status
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    data={data?.charts?.tripStatus || []}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    label
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {(data?.charts?.tripStatus || []).map((entry: any, index: number) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Map */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5" />
+                        Live Vehicle Tracking
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <div className="h-[400px] w-full">
+                        <MapComponent vehicles={data?.liveVehicles || []} />
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     )
 }

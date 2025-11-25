@@ -1,17 +1,30 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { authMiddleware } from "@/lib/auth-middleware"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 export async function GET() {
     try {
-        const auth = await authMiddleware('OWNER')
-        if (auth instanceof NextResponse) return auth
+        const session = await getServerSession(authOptions)
 
-        const { userId } = auth
+        console.log('[API] /owner/vehicles session check:', {
+            hasSession: !!session,
+            user: session?.user,
+            role: (session?.user as any)?.role
+        })
+
+        if (!session || !session.user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const userRole = (session.user as any)?.role
+        if (userRole !== 'OWNER') {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+        }
 
         const vehicles = await prisma.vehicle.findMany({
             where: {
-                ownerId: userId
+                ownerId: (session.user as any).id
             },
             include: {
                 driver: {

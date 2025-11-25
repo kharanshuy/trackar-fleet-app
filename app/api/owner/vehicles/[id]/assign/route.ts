@@ -1,17 +1,17 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { authMiddleware } from "@/lib/auth-middleware"
 import { rateLimitAPI } from "@/lib/rate-limit"
 import { logDriverAssignment } from "@/lib/audit-log"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(
-    req: Request,
+    req: NextRequest,
     props: { params: Promise<{ id: string }> }
 ) {
     const params = await props.params;
     try {
         // Check authentication - only owners can assign drivers
-        const auth = await authMiddleware('OWNER')
+        const auth = await authMiddleware(req, 'OWNER')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth

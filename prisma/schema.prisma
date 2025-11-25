@@ -65,6 +65,7 @@ model User {
   invoices       Invoice[]
   notifications  Notification[]
   auditLogs      AuditLog[]
+  Incident       Incident[]
 }
 
 model Vehicle {
@@ -92,29 +93,71 @@ model Vehicle {
 
   trips       Trip[]
   maintenance Maintenance[]
+  fuelLogs    FuelLog[]
+  incidents   Incident[]
+
+  // New fields
+  photos             String[]
+  registrationNumber String?
+  registrationExpiry DateTime?
+  insuranceExpiry    DateTime?
+
+  @@index([ownerId])
+}
+
+model FuelLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  odometer  Float
+  liters    Float
+  cost      Float
+  fullTank  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vehicleId String  @db.ObjectId
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+}
+
+model Incident {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  date        DateTime
+  type        String // ACCIDENT, TICKET, BREAKDOWN, OTHER
+  description String
+  cost        Float?
+  status      String   @default("OPEN") // OPEN, RESOLVED, CLOSED
+  photos      String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  vehicleId String  @db.ObjectId
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+
+  driverId String? @db.ObjectId
+  driver   User?   @relation(fields: [driverId], references: [id])
 }
 
 model Trip {
-  id              String     @id @default(auto()) @map("_id") @db.ObjectId
-  tripNumber      String     @unique
-  origin          String
-  destination     String
-  originLat       Float?
-  originLng       Float?
-  destinationLat  Float?
-  destinationLng  Float?
-  distance        Float?
-  estimatedTime   Float?
-  actualTime      Float?
-  status          TripStatus @default(ASSIGNED)
-  startTime       DateTime?
-  endTime         DateTime?
-  cost            Float?
-  notes           String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  tripNumber     String     @unique
+  origin         String
+  destination    String
+  originLat      Float?
+  originLng      Float?
+  destinationLat Float?
+  destinationLng Float?
+  distance       Float?
+  estimatedTime  Float?
+  actualTime     Float?
+  status         TripStatus @default(ASSIGNED)
+  startTime      DateTime?
+  endTime        DateTime?
+  cost           Float?
+  notes          String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
-  vehicleId String @db.ObjectId
+  vehicleId String  @db.ObjectId
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
 
   driverId String @db.ObjectId
@@ -125,6 +168,10 @@ model Trip {
 
   locations Location[]
   invoice   Invoice?
+
+  @@index([vehicleId, status])
+  @@index([driverId, status])
+  @@index([clientId])
 }
 
 model Location {
@@ -138,6 +185,8 @@ model Location {
 
   tripId String @db.ObjectId
   trip   Trip   @relation(fields: [tripId], references: [id])
+
+  @@index([tripId, timestamp(sort: Desc)])
 }
 
 model Maintenance {
@@ -152,7 +201,7 @@ model Maintenance {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  vehicleId String @db.ObjectId
+  vehicleId String  @db.ObjectId
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
 }
 
@@ -172,18 +221,18 @@ model SupportTicket {
 }
 
 model Invoice {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  invoiceNumber String      @unique
-  amount      Float
-  tax         Float         @default(0)
-  discount    Float         @default(0)
-  total       Float
-  status      InvoiceStatus @default(PENDING)
-  dueDate     DateTime
-  paidDate    DateTime?
-  notes       String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceNumber String        @unique
+  amount        Float
+  tax           Float         @default(0)
+  discount      Float         @default(0)
+  total         Float
+  status        InvoiceStatus @default(PENDING)
+  dueDate       DateTime
+  paidDate      DateTime?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   clientId String @db.ObjectId
   client   User   @relation(fields: [clientId], references: [id])
@@ -222,4 +271,3 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([timestamp])
 }
-

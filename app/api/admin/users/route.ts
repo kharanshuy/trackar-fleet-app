@@ -1,13 +1,12 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { authMiddleware } from "@/lib/auth-middleware"
 import { logUserAction } from "@/lib/audit-log"
-import { sanitizeForExport } from "@/lib/sanitize"
 import { prisma } from "@/lib/prisma"
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
         // Check authentication
-        const auth = await authMiddleware('ADMIN')
+        const auth = await authMiddleware(req, 'ADMIN')
         if (auth instanceof NextResponse) return auth
 
         const { searchParams } = new URL(req.url)
@@ -68,10 +67,10 @@ export async function GET(req: Request) {
     }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         // Check authentication
-        const auth = await authMiddleware('ADMIN')
+        const auth = await authMiddleware(req, 'ADMIN')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth

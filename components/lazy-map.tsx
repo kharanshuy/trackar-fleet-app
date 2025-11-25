@@ -20,15 +20,17 @@ interface LazyMapProps {
     center?: { lat: number; lng: number }
     zoom?: number
     height?: string
+    realtime?: boolean
 }
 
-export function LazyMap({ vehicles, center, zoom = 10, height = '400px' }: LazyMapProps) {
+export function LazyMap({ vehicles, center, zoom = 10, height = '400px', realtime = false }: LazyMapProps) {
     return (
         <div style={{ height }} className="w-full">
             <MapComponent
                 vehicles={vehicles}
                 center={center}
                 zoom={zoom}
+                realtime={realtime}
             />
         </div>
     )

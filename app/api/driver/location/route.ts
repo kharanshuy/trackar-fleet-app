@@ -1,17 +1,15 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
+import { prisma } from "@/lib/prisma"
 import { authMiddleware } from "@/lib/auth-middleware"
 import { rateLimitLocation } from "@/lib/rate-limit"
-import { prisma } from "@/lib/prisma"
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
-        // Check authentication - only drivers can update location
-        const auth = await authMiddleware('DRIVER')
+        const auth = await authMiddleware(req, 'DRIVER')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth
 
-        // Rate limiting: 1 update per 5 seconds
         const rateLimit = rateLimitLocation(userId)
 
         if (!rateLimit.allowed) {

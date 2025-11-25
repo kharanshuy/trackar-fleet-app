@@ -1,8 +1,17 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, Download, BarChart3, PieChart as PieChartIcon, TrendingUp, DollarSign, Truck, MapPin, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import {
+    TrendingUp,
+    TrendingDown,
+    DollarSign,
+    Users,
+    Truck,
+    MapPin,
+    Calendar,
+    BarChart3,
+    PieChart as PieChartIcon
+} from "lucide-react"
 import {
     LineChart,
     Line,
@@ -20,11 +29,11 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts'
+import { useEffect, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useEffect, useState } from "react"
 
-export default function OwnerReportsPage() {
+export default function AnalyticsPage() {
     const [timeframe, setTimeframe] = useState("month")
     const [data, setData] = useState<any>(null)
     const [loading, setLoading] = useState(true)
@@ -94,12 +103,12 @@ export default function OwnerReportsPage() {
     const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6']
 
     return (
-        <div className="p-4 md:p-8 space-y-6">
+        <div className="space-y-6">
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Reports & Analytics</h2>
-                    <p className="text-muted-foreground">Comprehensive insights into fleet performance</p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Comprehensive insights into fleet performance</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <Select value={timeframe} onValueChange={setTimeframe}>
@@ -115,63 +124,6 @@ export default function OwnerReportsPage() {
                         </SelectContent>
                     </Select>
                 </div>
-            </div>
-
-            {/* Export Options */}
-            <div className="grid gap-4 md:grid-cols-3">
-                <Card className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <BarChart3 className="h-5 w-5 text-blue-500" />
-                            Revenue Report
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">
-                            Detailed breakdown of earnings by vehicle, driver, and time period.
-                        </p>
-                        <Button className="w-full" variant="outline">
-                            <Download className="h-4 w-4 mr-2" />
-                            Download CSV
-                        </Button>
-                    </CardContent>
-                </Card>
-
-                <Card className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <PieChartIcon className="h-5 w-5 text-green-500" />
-                            Vehicle Utilization
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">
-                            Analysis of vehicle usage, idle time, and efficiency metrics.
-                        </p>
-                        <Button className="w-full" variant="outline">
-                            <Download className="h-4 w-4 mr-2" />
-                            Download PDF
-                        </Button>
-                    </CardContent>
-                </Card>
-
-                <Card className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <FileText className="h-5 w-5 text-orange-500" />
-                            Maintenance Logs
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">
-                            Complete history of service records and repair costs.
-                        </p>
-                        <Button className="w-full" variant="outline">
-                            <Download className="h-4 w-4 mr-2" />
-                            Download Excel
-                        </Button>
-                    </CardContent>
-                </Card>
             </div>
 
             {/* Tabs for different analytics views */}

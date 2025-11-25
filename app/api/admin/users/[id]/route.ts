@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { authMiddleware } from "@/lib/auth-middleware"
 import { logUserAction } from "@/lib/audit-log"
 import { prisma } from "@/lib/prisma"
 
 export async function PATCH(
-    req: Request,
+    req: NextRequest,
     props: { params: Promise<{ id: string }> }
 ) {
     const params = await props.params;
     try {
         // Check authentication
-        const auth = await authMiddleware('ADMIN')
+        const auth = await authMiddleware(req, 'ADMIN')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth
@@ -60,13 +60,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-    req: Request,
+    req: NextRequest,
     props: { params: Promise<{ id: string }> }
 ) {
     const params = await props.params;
     try {
         // Check authentication
-        const auth = await authMiddleware('ADMIN')
+        const auth = await authMiddleware(req, 'ADMIN')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth

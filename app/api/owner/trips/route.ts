@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { authMiddleware } from "@/lib/auth-middleware"
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
-        const auth = await authMiddleware('OWNER')
+        const auth = await authMiddleware(req, 'OWNER')
         if (auth instanceof NextResponse) return auth
 
         const { userId } = auth
