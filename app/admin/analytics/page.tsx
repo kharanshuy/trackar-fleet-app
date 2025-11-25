@@ -317,7 +317,10 @@ export default function AnalyticsPage() {
                                             cx="50%"
                                             cy="50%"
                                             labelLine={false}
-                                            label={({ type, percentage }) => `${type}: ${percentage}%`}
+                                            label={(props: any) => {
+                                                const entry = props.payload || props
+                                                return `${entry.type}: ${entry.percentage}%`
+                                            }}
                                             outerRadius={100}
                                             fill="#8884d8"
                                             dataKey="count"
