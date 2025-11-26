@@ -317,6 +317,7 @@ export default function AnalyticsPage() {
                                             cx="50%"
                                             cy="50%"
                                             labelLine={false}
+                                            // Fixed: Use props.payload to access data properties
                                             label={(props: any) => {
                                                 const entry = props.payload || props
                                                 return `${entry.type}: ${entry.percentage}%`
